@@ -1,4 +1,4 @@
-import { version } from "../goosemodModule.json";
+import { version, name } from "../goosemodModule.json";
 
 let settings = {
   boolean: true,
@@ -28,7 +28,7 @@ function setSetting(setting, value) {
         break;
     }
   } catch (e) {
-    goosemodScope.logger.debug("Module Template", e);
+    goosemodScope.logger.debug(name, e);
     goosemodScope.showToast(
       `Failed to set setting "${setting}" to "${value}".`,
       {
@@ -49,7 +49,7 @@ export default {
     },
 
     onLoadingFinished: async () =>
-      goosemodScope.settings.createItem("Module Template", [
+      goosemodScope.settings.createItem(name, [
         `(v${version})`,
         {
           type: "header",
@@ -65,7 +65,7 @@ export default {
       ]),
 
     onRemove: async () => {
-      goosemodScope.settings.removeItem("Module Template");
+      goosemodScope.settings.removeItem(name);
 
       //! . . . (Make sure you completely stop and remove your module here!)
     },
