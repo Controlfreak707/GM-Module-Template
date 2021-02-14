@@ -8,17 +8,16 @@ let settings = {
 
 function setSetting(setting, value) {
   try {
+    settings[setting] = value;
+
     switch (setting) {
       case "boolean":
-        settings.boolean = value;
         // . . .
         break;
       case "string":
-        settings.string = value;
         // . . .
         break;
       case "integer":
-        settings.integer = value;
         // . . .
         break;
 
