@@ -1,4 +1,4 @@
-import { version, name } from "../goosemodModule.json";
+import { name, version } from "../goosemodModule.json";
 
 let settings = {
   boolean: true,
