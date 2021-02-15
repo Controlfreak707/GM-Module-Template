@@ -39,14 +39,9 @@ function updateSetting(setting, value = settings[setting]) {
 }
 
 function updateSettings() {
-  updateSetting("A");
-  updateSetting("B");
-  updateSetting("C");
-
-  //* The above code works, but the below may be better. It hasn't yet been tested.
-  /*for (const setting in settings) {
+  for (const setting in settings) {
     updateSetting(setting);
-  }*/
+  }
 }
 
 export default {
