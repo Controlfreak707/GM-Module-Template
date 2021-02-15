@@ -1,23 +1,23 @@
 import { name, version } from "../goosemodModule.json";
 
 let settings = {
-  boolean: true,
-  string: "Hello World!",
-  integer: 42,
+  A: true,
+  B: false,
+  C: true,
 };
 
-function setSetting(setting, value) {
+function updateSetting(setting, value = settings[setting]) {
   try {
     settings[setting] = value;
 
     switch (setting) {
-      case "boolean":
+      case "A":
         // . . .
         break;
-      case "string":
+      case "B":
         // . . .
         break;
-      case "integer":
+      case "C":
         // . . .
         break;
 
@@ -38,17 +38,22 @@ function setSetting(setting, value) {
   }
 }
 
+function updateSettings() {
+  updateSetting("A");
+  updateSetting("B");
+  updateSetting("C");
+
+  //* The above code works, but the below may be better. It hasn't yet been tested.
+  /*for (const setting in settings) {
+    updateSetting(setting);
+  }*/
+}
+
 export default {
   goosemodHandlers: {
     onImport: async () => {
-      setSetting("boolean", settings.boolean);
-      setSetting("string", settings.string);
-      setSetting("integer", settings.integer);
+      updateSettings();
 
-      // . . . (This is where most of your code should go, ran on import.)
-    },
-
-    onLoadingFinished: async () =>
       goosemodScope.settings.createItem(name, [
         `(v${version})`,
         {
@@ -57,12 +62,26 @@ export default {
         },
         {
           type: "toggle",
-          text: "Boolean",
-          onToggle: (value) => setSetting("boolean", value),
-          isToggled: () => settings.boolean,
+          text: "A",
+          onToggle: (value) => updateSetting("A", value),
+          isToggled: () => settings.A,
         },
-        // Input fields (strings, integers) aren't yet available in GooseMod...
-      ]),
+        {
+          type: "toggle",
+          text: "B",
+          onToggle: (value) => updateSetting("B", value),
+          isToggled: () => settings.B,
+        },
+        {
+          type: "toggle",
+          text: "C",
+          onToggle: (value) => updateSetting("C", value),
+          isToggled: () => settings.C,
+        },
+      ]);
+
+      // . . . (This is where most of your code should go, ran on import.)
+    },
 
     onRemove: async () => {
       goosemodScope.settings.removeItem(name);
@@ -74,9 +93,7 @@ export default {
     loadSettings: ([_settings]) => {
       settings = _settings;
 
-      setSetting("boolean", settings.boolean);
-      setSetting("string", settings.string);
-      setSetting("integer", settings.integer);
+      updateSettings();
 
       // . . . (Anything else you need to happen when loading settings.)
     },
