@@ -27,8 +27,8 @@ function updateSetting(setting, value = settings[setting]) {
         });
         break;
     }
-  } catch (e) {
-    goosemodScope.logger.debug(name, e);
+  } catch (error) {
+    goosemodScope.logger.debug(name, error);
     goosemodScope.showToast(
       `Failed to set setting "${setting}" to "${value}".`,
       {
