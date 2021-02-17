@@ -78,12 +78,6 @@ export default {
       // . . . (This is where most of your code should go, ran on import.)
     },
 
-    onRemove: async () => {
-      goosemodScope.settings.removeItem(name);
-
-      //! . . . (Make sure you completely stop and remove your module here!)
-    },
-
     getSettings: () => [settings],
     loadSettings: ([_settings]) => {
       settings = _settings;
@@ -91,6 +85,12 @@ export default {
       updateSettings();
 
       // . . . (Anything else you need to happen when loading settings.)
+    },
+
+    onRemove: async () => {
+      goosemodScope.settings.removeItem(name);
+
+      //! . . . (Make sure you completely stop and remove your module here!)
     },
   },
 };
