@@ -38,9 +38,9 @@ function updateSetting(setting, value = settings[setting]) {
   }
 }
 
-function updateSettings() {
+function updateSettings(value) {
   for (const setting in settings) {
-    updateSetting(setting);
+    updateSetting(setting, value);
   }
 }
 
@@ -89,6 +89,7 @@ export default {
 
     onRemove: async () => {
       goosemodScope.settings.removeItem(name);
+      updateSettings(false); // Useful when dealing with CSS, remove if not applicable
 
       //! . . . (Make sure you completely stop and remove your module here!)
     },
