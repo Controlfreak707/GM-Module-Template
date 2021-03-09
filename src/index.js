@@ -1,5 +1,9 @@
 import { name, version } from "../goosemodModule.json";
 
+import { showToast } from "@goosemod";
+import { debug } from "@goosemod/logger";
+import settingsPage from "@goosemod/settings";
+
 let settings = {
   A: true,
   B: false,
@@ -22,19 +26,16 @@ function updateSetting(setting, value = settings[setting]) {
         break;
 
       default:
-        goosemodScope.showToast(`Setting "${setting}" not found.`, {
+        showToast(`Setting "${setting}" not found.`, {
           type: "error",
         });
         break;
     }
   } catch (error) {
-    goosemodScope.logger.debug(name, error);
-    goosemodScope.showToast(
-      `Failed to set setting "${setting}" to "${value}".`,
-      {
-        type: "error",
-      }
-    );
+    debug(name, error);
+    showToast(`Failed to set setting "${setting}" to "${value}".`, {
+      type: "error",
+    });
   }
 }
 
@@ -49,7 +50,7 @@ export default {
     onImport: async () => {
       updateSettings();
 
-      goosemodScope.settings.createItem(name, [
+      settingsPage.createItem(name, [
         `(v${version})`,
         {
           type: "header",
@@ -88,7 +89,7 @@ export default {
     },
 
     onRemove: async () => {
-      goosemodScope.settings.removeItem(name);
+      settingsPage.removeItem(name);
       updateSettings(false); // Useful when dealing with CSS, remove if not applicable
 
       //! . . . (Make sure you completely stop and remove your module here!)
